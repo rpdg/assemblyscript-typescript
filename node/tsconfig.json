@@ -1,0 +1,10 @@
+{
+  "include": [
+    "./**/*.ts"
+  ],
+  "compilerOptions": {
+    "lib": ["es5", "es2015" ,"dom"],
+    "types": [ "node" ],
+    "target": "esnext",
+  }
+}
