@@ -13,6 +13,6 @@ WebAssembly.instantiateStreaming(fetch("./build/optimized.wasm"), {
     }
   },
 }).then(result => {
-  const {add , times} = result.instance.exports;
-  document.getElementById("container").innerHTML = `3+8=${add(3, 8)} ,3x8=${times(3,8)}`;
+  const {add , times , factorial} = result.instance.exports;
+  document.getElementById("container").innerHTML = `3+8=${add(3, 8)} ,3x8=${times(3,8)} , 24!=${factorial(24)}`;
 }).catch(console.error);

@@ -17,6 +17,7 @@ import { readFileSync } from "fs";
 interface MyApi {
     add(a: number, b: number): number;
     times(a: number, b: number): number;
+    factorial(a: number): number;
 }
 
 /**
@@ -43,5 +44,6 @@ function main() {
     // Finally, call the add function we exported
     console.log("The result is:", interop.add(12, 23));
     console.log("The result is:", interop.times(3, 2));
+    console.log("The result is:", interop.factorial(24));
 }
 main();

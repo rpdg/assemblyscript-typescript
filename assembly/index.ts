@@ -19,12 +19,18 @@ export function add(a: i32, b: i32): i32 {
 }
 
 
-export function factorial(value: f64): f64 {
-  if (value == 0 || value == 1) return 1;
-  return value * factorial(value - 1);
+export function factorial(num: f64): f64 {
+  /* if (value == 0 || value == 1) return 1;
+  return value * factorial(value - 1); */
+
+  let rval: f64 = 1;
+  let l = num + 1;
+  for (let i: f64 = 2; i < l; i++)
+    rval = rval * i;
+  return rval;
 }
 
 
 // @ts-ignore: import a custom_add function from the customMath.times namespace
 @external("customMath", "times")
-export declare function times(a: f64, b: f64): f64;
+export declare function times(a: i32, b: i32): i32;

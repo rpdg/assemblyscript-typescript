@@ -11,9 +11,8 @@
  (type $FUNCSIG$jj (func (param i64) (result i64)))
  (type $FUNCSIG$d (func (result f64)))
  (type $FUNCSIG$dd (func (param f64) (result f64)))
- (type $FUNCSIG$ddd (func (param f64 f64) (result f64)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
- (import "customMath" "times" (func $assembly/index/times (param f64 f64) (result f64)))
+ (import "customMath" "times" (func $assembly/index/times (param i32 i32) (result i32)))
  (memory $0 1)
  (data (i32.const 8) "\1e\00\00\00\01\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00")
  (data (i32.const 56) "(\00\00\00\01\00\00\00\01\00\00\00(\00\00\00a\00l\00l\00o\00c\00a\00t\00i\00o\00n\00 \00t\00o\00o\00 \00l\00a\00r\00g\00e\00")
@@ -3771,26 +3770,37 @@
   i32.add
  )
  (func $assembly/index/factorial (; 39 ;) (type $FUNCSIG$dd) (param $0 f64) (result f64)
-  local.get $0
-  f64.const 0
-  f64.eq
-  if (result i32)
-   i32.const 1
-  else
-   local.get $0
-   f64.const 1
-   f64.eq
-  end
-  if
-   f64.const 1
-   return
-  end
-  local.get $0
+  (local $1 f64)
+  (local $2 f64)
+  (local $3 f64)
+  f64.const 1
+  local.set $1
   local.get $0
   f64.const 1
-  f64.sub
-  call $assembly/index/factorial
-  f64.mul
+  f64.add
+  local.set $2
+  block $break|0
+   f64.const 2
+   local.set $3
+   loop $loop|0
+    local.get $3
+    local.get $2
+    f64.lt
+    i32.eqz
+    br_if $break|0
+    local.get $1
+    local.get $3
+    f64.mul
+    local.set $1
+    local.get $3
+    f64.const 1
+    f64.add
+    local.set $3
+    br $loop|0
+   end
+   unreachable
+  end
+  local.get $1
  )
  (func $start (; 40 ;) (type $FUNCSIG$v)
   call $start:assembly/index
