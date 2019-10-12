@@ -1,11 +1,15 @@
 (module
  (type $FUNCSIG$iii (func (param i32 i32) (result i32)))
  (type $FUNCSIG$v (func))
+ (type $FUNCSIG$iiii (func (param i32 i32 i32) (result i32)))
  (type $FUNCSIG$viiii (func (param i32 i32 i32 i32)))
  (type $FUNCSIG$vii (func (param i32 i32)))
  (type $FUNCSIG$ii (func (param i32) (result i32)))
  (type $FUNCSIG$vi (func (param i32)))
  (type $FUNCSIG$viii (func (param i32 i32 i32)))
+ (type $FUNCSIG$jj (func (param i64) (result i64)))
+ (type $FUNCSIG$d (func (result f64)))
+ (type $FUNCSIG$dd (func (param f64) (result f64)))
  (type $FUNCSIG$ddd (func (param f64 f64) (result f64)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (import "customMath" "times" (func $assembly/index/times (param f64 f64) (result f64)))
@@ -15,21 +19,33 @@
  (data (i32.const 112) "\1e\00\00\00\01\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00p\00u\00r\00e\00.\00t\00s")
  (data (i32.const 160) "$\00\00\00\01\00\00\00\01\00\00\00$\00\00\00I\00n\00d\00e\00x\00 \00o\00u\00t\00 \00o\00f\00 \00r\00a\00n\00g\00e")
  (data (i32.const 216) "\14\00\00\00\01\00\00\00\01\00\00\00\14\00\00\00~\00l\00i\00b\00/\00r\00t\00.\00t\00s")
- (data (i32.const 256) "\03\00\00\00\10\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\10")
+ (data (i32.const 256) "\18\00\00\00\01\00\00\00\01\00\00\00\18\00\00\00~\00l\00i\00b\00/\00m\00a\00t\00h\00.\00t\00s")
+ (data (i32.const 296) "(\00\00\00\01\00\00\00\01\00\00\00(\00\00\00P\00R\00N\00G\00 \00m\00u\00s\00t\00 \00b\00e\00 \00s\00e\00e\00d\00e\00d\00.")
+ (data (i32.const 356) "\01\00\00\00\01")
+ (data (i32.const 368) "\08\00\00\00\01\00\00\00\01\00\00\00\08\00\00\00n\00u\00l\00l")
+ (data (i32.const 392) "\03\00\00\00\10\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\10")
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/rt/tlsf/collectLock (mut i32) (i32.const 0))
  (global $~lib/rt/pure/ROOTS (mut i32) (i32.const 0))
  (global $~lib/rt/pure/CUR (mut i32) (i32.const 0))
  (global $~lib/rt/pure/END (mut i32) (i32.const 0))
- (global $~lib/rt/__rtti_base i32 (i32.const 256))
+ (global $~lib/math/random_seeded (mut i32) (i32.const 0))
+ (global $~lib/math/random_state0_64 (mut i64) (i64.const 0))
+ (global $~lib/math/random_state1_64 (mut i64) (i64.const 0))
+ (global $~lib/math/random_state0_32 (mut i32) (i32.const 0))
+ (global $~lib/math/random_state1_32 (mut i32) (i32.const 0))
+ (global $~lib/rt/__rtti_base i32 (i32.const 392))
  (export "memory" (memory $0))
  (export "__alloc" (func $~lib/rt/tlsf/__alloc))
  (export "__retain" (func $~lib/rt/pure/__retain))
  (export "__release" (func $~lib/rt/pure/__release))
  (export "__collect" (func $~lib/rt/pure/__collect))
  (export "__rtti_base" (global $~lib/rt/__rtti_base))
+ (export "scramble" (func $assembly/index/scramble))
  (export "add" (func $assembly/index/add))
+ (export "factorial" (func $assembly/index/factorial))
  (export "times" (func $assembly/index/times))
+ (start $start)
  (func $~lib/rt/tlsf/removeBlock (; 2 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -615,10 +631,10 @@
   if
    unreachable
   end
-  i32.const 288
+  i32.const 432
   i32.const 0
   i32.store
-  i32.const 1856
+  i32.const 2000
   i32.const 0
   i32.store
   i32.const 0
@@ -632,7 +648,7 @@
     local.get $0
     i32.const 2
     i32.shl
-    i32.const 288
+    i32.const 432
     i32.add
     i32.const 0
     i32.store offset=4
@@ -651,7 +667,7 @@
       i32.add
       i32.const 2
       i32.shl
-      i32.const 288
+      i32.const 432
       i32.add
       i32.const 0
       i32.store offset=96
@@ -669,13 +685,13 @@
     br $loop|0
    end
   end
-  i32.const 288
-  i32.const 1872
+  i32.const 432
+  i32.const 2016
   memory.size
   i32.const 16
   i32.shl
   call $~lib/rt/tlsf/addMemory
-  i32.const 288
+  i32.const 432
   global.set $~lib/rt/tlsf/ROOT
  )
  (func $~lib/rt/tlsf/prepareSize (; 6 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
@@ -1361,7 +1377,7 @@
  )
  (func $~lib/rt/pure/__retain (; 19 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
   local.get $0
-  i32.const 284
+  i32.const 420
   i32.gt_u
   if
    local.get $0
@@ -1373,7 +1389,7 @@
  )
  (func $~lib/rt/__typeinfo (; 20 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
   local.get $0
-  i32.const 256
+  i32.const 392
   i32.load
   i32.gt_u
   if
@@ -1387,7 +1403,7 @@
   local.get $0
   i32.const 3
   i32.shl
-  i32.const 260
+  i32.const 396
   i32.add
   i32.load
  )
@@ -1749,7 +1765,7 @@
  )
  (func $~lib/rt/pure/__release (; 26 ;) (type $FUNCSIG$vi) (param $0 i32)
   local.get $0
-  i32.const 284
+  i32.const 420
   i32.gt_u
   if
    local.get $0
@@ -1758,14 +1774,439 @@
    call $~lib/rt/pure/decrement
   end
  )
- (func $assembly/index/add (; 27 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/math/murmurHash3 (; 27 ;) (type $FUNCSIG$jj) (param $0 i64) (result i64)
+  local.get $0
+  i64.const 33
+  i64.shr_u
+  local.get $0
+  i64.xor
+  i64.const -49064778989728563
+  i64.mul
+  local.tee $0
+  local.get $0
+  i64.const 33
+  i64.shr_u
+  i64.xor
+  i64.const -4265267296055464877
+  i64.mul
+  local.tee $0
+  local.get $0
+  i64.const 33
+  i64.shr_u
+  i64.xor
+ )
+ (func $~lib/math/splitMix32 (; 28 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  local.get $0
+  i32.const 1831565813
+  i32.add
+  local.tee $0
+  local.get $0
+  i32.const 15
+  i32.shr_u
+  i32.xor
+  local.get $0
+  i32.const 1
+  i32.or
+  i32.mul
+  local.tee $0
+  local.get $0
+  i32.const 61
+  i32.or
+  local.get $0
+  i32.const 7
+  i32.shr_u
+  local.get $0
+  i32.xor
+  i32.mul
+  local.get $0
+  i32.add
+  i32.xor
+  local.tee $0
+  local.get $0
+  i32.const 14
+  i32.shr_u
+  i32.xor
+ )
+ (func $~lib/math/NativeMath.seedRandom (; 29 ;) (type $FUNCSIG$v)
+  i32.const 1
+  global.set $~lib/math/random_seeded
+  i64.const 1234
+  call $~lib/math/murmurHash3
+  global.set $~lib/math/random_state0_64
+  global.get $~lib/math/random_state0_64
+  i64.const -1
+  i64.xor
+  call $~lib/math/murmurHash3
+  global.set $~lib/math/random_state1_64
+  i32.const 1234
+  call $~lib/math/splitMix32
+  global.set $~lib/math/random_state0_32
+  global.get $~lib/math/random_state0_32
+  call $~lib/math/splitMix32
+  global.set $~lib/math/random_state1_32
+  global.get $~lib/math/random_state1_32
+  i32.const 0
+  i32.ne
+  i32.const 0
+  global.get $~lib/math/random_state0_32
+  i32.const 0
+  global.get $~lib/math/random_state1_64
+  i64.const 0
+  i64.ne
+  i32.const 0
+  global.get $~lib/math/random_state0_64
+  i64.const 0
+  i64.ne
+  select
+  select
+  select
+  i32.eqz
+  if
+   i32.const 0
+   i32.const 272
+   i32.const 1369
+   i32.const 4
+   call $~lib/builtins/abort
+   unreachable
+  end
+ )
+ (func $~lib/math/NativeMath.random (; 30 ;) (type $FUNCSIG$d) (result f64)
+  (local $0 i64)
+  (local $1 i64)
+  global.get $~lib/math/random_seeded
+  i32.eqz
+  if
+   i32.const 312
+   i32.const 272
+   i32.const 1376
+   i32.const 24
+   call $~lib/builtins/abort
+   unreachable
+  end
+  global.get $~lib/math/random_state0_64
+  local.set $0
+  global.get $~lib/math/random_state1_64
+  local.tee $1
+  global.set $~lib/math/random_state0_64
+  local.get $0
+  i64.const 23
+  i64.shl
+  local.get $0
+  i64.xor
+  local.tee $0
+  local.get $0
+  i64.const 17
+  i64.shr_u
+  i64.xor
+  local.get $1
+  i64.xor
+  local.get $1
+  i64.const 26
+  i64.shr_u
+  i64.xor
+  global.set $~lib/math/random_state1_64
+  local.get $1
+  i64.const 12
+  i64.shr_u
+  i64.const 4607182418800017408
+  i64.or
+  f64.reinterpret_i64
+  f64.const 1
+  f64.sub
+ )
+ (func $~lib/string/String#get:length (; 31 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  local.get $0
+  i32.const 16
+  i32.sub
+  i32.load offset=12
+  i32.const 1
+  i32.shr_u
+ )
+ (func $~lib/string/String#substring (; 32 ;) (type $FUNCSIG$iiii) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
+  (local $4 i32)
+  local.get $1
+  i32.const 0
+  local.get $1
+  i32.const 0
+  i32.gt_s
+  select
+  local.tee $3
+  local.get $0
+  call $~lib/string/String#get:length
+  local.tee $1
+  local.get $3
+  local.get $1
+  i32.lt_s
+  select
+  local.tee $3
+  local.get $2
+  i32.const 0
+  local.get $2
+  i32.const 0
+  i32.gt_s
+  select
+  local.tee $2
+  local.get $1
+  local.get $2
+  local.get $1
+  i32.lt_s
+  select
+  local.tee $1
+  local.get $3
+  local.get $1
+  i32.gt_s
+  select
+  i32.const 1
+  i32.shl
+  local.tee $4
+  local.get $3
+  local.get $1
+  local.get $3
+  local.get $1
+  i32.lt_s
+  select
+  i32.const 1
+  i32.shl
+  local.tee $1
+  i32.sub
+  local.tee $2
+  i32.eqz
+  if
+   i32.const 368
+   call $~lib/rt/pure/__retain
+   return
+  end
+  local.get $1
+  if (result i32)
+   i32.const 0
+  else
+   local.get $0
+   call $~lib/string/String#get:length
+   i32.const 1
+   i32.shl
+   local.get $4
+   i32.eq
+  end
+  if
+   local.get $0
+   call $~lib/rt/pure/__retain
+   return
+  end
+  local.get $2
+  i32.const 1
+  call $~lib/rt/tlsf/__alloc
+  local.tee $3
+  local.get $0
+  local.get $1
+  i32.add
+  local.get $2
+  call $~lib/memory/memory.copy
+  local.get $3
+  call $~lib/rt/pure/__retain
+ )
+ (func $~lib/string/String#concat (; 33 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  local.get $1
+  call $~lib/rt/pure/__retain
+  drop
+  local.get $1
+  i32.eqz
+  if
+   local.get $1
+   i32.const 384
+   i32.ne
+   if
+    i32.const 384
+    call $~lib/rt/pure/__retain
+    drop
+    local.get $1
+    call $~lib/rt/pure/__release
+   end
+   i32.const 384
+   local.set $1
+  end
+  local.get $0
+  call $~lib/string/String#get:length
+  i32.const 1
+  i32.shl
+  local.tee $3
+  local.get $1
+  call $~lib/string/String#get:length
+  i32.const 1
+  i32.shl
+  local.tee $4
+  i32.add
+  local.tee $2
+  i32.eqz
+  if
+   i32.const 368
+   call $~lib/rt/pure/__retain
+   local.get $1
+   call $~lib/rt/pure/__release
+   return
+  end
+  local.get $2
+  i32.const 1
+  call $~lib/rt/tlsf/__alloc
+  call $~lib/rt/pure/__retain
+  local.tee $2
+  local.get $0
+  local.get $3
+  call $~lib/memory/memory.copy
+  local.get $2
+  local.get $3
+  i32.add
+  local.get $1
+  local.get $4
+  call $~lib/memory/memory.copy
+  local.get $1
+  call $~lib/rt/pure/__release
+  local.get $2
+ )
+ (func $~lib/string/String.__concat (; 34 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  drop
+  local.get $1
+  call $~lib/rt/pure/__retain
+  drop
+  local.get $0
+  i32.const 384
+  local.get $0
+  select
+  local.get $1
+  call $~lib/string/String#concat
+  local.get $0
+  call $~lib/rt/pure/__release
+  local.get $1
+  call $~lib/rt/pure/__release
+ )
+ (func $assembly/index/scramble (; 35 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 i32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  drop
+  local.get $0
+  call $~lib/rt/pure/__retain
+  local.set $2
+  loop $loop|0
+   block $break|0
+    local.get $5
+    i32.const 100
+    i32.ge_s
+    br_if $break|0
+    call $~lib/math/NativeMath.random
+    local.get $0
+    call $~lib/string/String#get:length
+    f64.convert_i32_s
+    f64.mul
+    f64.floor
+    i32.trunc_f64_s
+    local.tee $1
+    call $~lib/math/NativeMath.random
+    local.get $0
+    call $~lib/string/String#get:length
+    local.get $1
+    i32.sub
+    f64.convert_i32_s
+    f64.mul
+    f64.floor
+    i32.trunc_f64_s
+    i32.add
+    local.set $3
+    local.get $2
+    local.tee $4
+    local.get $4
+    i32.const 0
+    local.get $1
+    call $~lib/string/String#substring
+    local.tee $6
+    local.get $4
+    local.get $3
+    i32.const 2147483647
+    call $~lib/string/String#substring
+    local.tee $7
+    call $~lib/string/String.__concat
+    local.tee $8
+    local.get $4
+    local.get $1
+    local.get $3
+    call $~lib/string/String#substring
+    local.tee $1
+    call $~lib/string/String.__concat
+    local.tee $3
+    local.tee $2
+    i32.ne
+    if
+     local.get $2
+     call $~lib/rt/pure/__retain
+     drop
+     local.get $4
+     call $~lib/rt/pure/__release
+    end
+    local.get $5
+    i32.const 1
+    i32.add
+    local.set $5
+    local.get $6
+    call $~lib/rt/pure/__release
+    local.get $7
+    call $~lib/rt/pure/__release
+    local.get $8
+    call $~lib/rt/pure/__release
+    local.get $1
+    call $~lib/rt/pure/__release
+    local.get $3
+    call $~lib/rt/pure/__release
+    br $loop|0
+   end
+  end
+  local.get $0
+  call $~lib/rt/pure/__release
+  local.get $2
+ )
+ (func $assembly/index/add (; 36 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
   local.get $0
   local.get $1
   i32.add
  )
- (func $~lib/rt/pure/__visit (; 28 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $assembly/index/factorial (; 37 ;) (type $FUNCSIG$dd) (param $0 f64) (result f64)
+  i32.const 1
   local.get $0
-  i32.const 284
+  f64.const 1
+  f64.eq
+  local.get $0
+  f64.const 0
+  f64.eq
+  select
+  if
+   f64.const 1
+   return
+  end
+  local.get $0
+  local.get $0
+  f64.const 1
+  f64.sub
+  call $assembly/index/factorial
+  f64.mul
+ )
+ (func $start (; 38 ;) (type $FUNCSIG$v)
+  call $~lib/math/NativeMath.seedRandom
+ )
+ (func $~lib/rt/pure/__visit (; 39 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+  local.get $0
+  i32.const 420
   i32.lt_u
   if
    return
@@ -1873,7 +2314,7 @@
    unreachable
   end
  )
- (func $~lib/rt/__visit_members (; 29 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/__visit_members (; 40 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   block $switch$1$default
    block $switch$1$case$4
     block $switch$1$case$2
@@ -1897,7 +2338,7 @@
   end
   unreachable
  )
- (func $null (; 30 ;) (type $FUNCSIG$v)
+ (func $null (; 41 ;) (type $FUNCSIG$v)
   nop
  )
 )
