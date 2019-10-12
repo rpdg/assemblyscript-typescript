@@ -5,7 +5,7 @@
  * call the `instantiateStreaming` function, otherwise the `instantiateBuffer`
  * method is used in node.js.
  */
-import { instantiateBuffer , ASUtil } from "./loader";
+import { instantiateBuffer, ASUtil } from "./loader";
 import { readFileSync } from "fs";
 /**
  * Defining an interface like this allows you to define the shape of the exported
@@ -15,9 +15,9 @@ import { readFileSync } from "fs";
  * if the parameter is not provided.
  */
 interface MyApi {
-    add(a: number, b: number): number;
-    times(a: number, b: number): number;
-    factorial(a: number): number;
+  add(a: number, b: number): number;
+  times(a: number, b: number): number;
+  factorial(a: number): number;
 }
 
 /**
@@ -25,11 +25,11 @@ interface MyApi {
  * discussed in greater detail later. For now, leave the imports object empty.
  **/
 const importsObject: any = {
-    customMath: {
-        times(a: number, b: number): number {
-          return a * b;
-        }
-      }
+  customMath: {
+    times(a: number, b: number): number {
+      return a * b;
+    }
+  }
 };
 
 /**
@@ -37,13 +37,44 @@ const importsObject: any = {
  * download and parse the module at exactly the same time.
  */
 function main() {
-    let wasm = readFileSync("../build/optimized.wasm");
-    // const compiled = new WebAssembly.Module(wasm);
-    var interop: ASUtil & MyApi = instantiateBuffer<MyApi>(wasm, importsObject);
+  let wasm = readFileSync("../build/optimized.wasm");
+  // const compiled = new WebAssembly.Module(wasm);
+  var interop: ASUtil & MyApi = instantiateBuffer<MyApi>(wasm, importsObject);
 
-    // Finally, call the add function we exported
-    console.log("The result is:", interop.add(12, 23));
-    console.log("The result is:", interop.times(3, 2));
-    console.log("The result is:", interop.factorial(24));
+  // Finally, call the add function we exported
+  console.log("The result is:", interop.add(12, 23));
+  console.log("The result is:", interop.times(3, 2));
+
+
+
+  var start, end, rTime, sTime;
+
+  start = new Date().getTime();
+
+  for (var i = 0; i < 10000; i++)
+    interop.factorial(300);
+
+  end = new Date().getTime();
+
+  rTime = end - start;
+
+  start = new Date().getTime();
+
+  for (var i = 0; i < 10000; i++)
+    sFact(300);
+
+  end = new Date().getTime();
+
+
+  sTime = end - start;
+
+  console.log('wasm: ' + rTime + '\n v8: ' + sTime);
 }
 main();
+
+function sFact(num: number): number {
+  var rval = 1;
+  for (var i = 2; i <= num; i++)
+    rval = rval * i;
+  return rval;
+}
